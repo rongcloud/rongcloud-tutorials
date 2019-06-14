@@ -1,0 +1,48 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<dom-module id="difficulty-indicator">
+  <template>
+    <style>
+      .difficulty-indicator__value {
+        background-image: url('../../images/level+of+difficulty.svg');
+        background-position-y: 5px;
+        background-repeat: no-repeat;
+        display: inline-block;
+        margin-left: 3px;
+        text-indent: -99999px;
+        width: 75px;
+      }
+
+      .difficulty-indicator__value--1 {
+        background-position-x: -60px;
+      }
+
+      .difficulty-indicator__value--2 {
+        background-position-x: -45px;
+      }
+
+      .difficulty-indicator__value--3 {
+        background-position-x: -30px;
+      }
+
+      .difficulty-indicator__value--4 {
+        background-position-x: -15px;
+      }
+
+      .difficulty-indicator__value--5 {
+        background-position-x: 0;
+      }
+    </style>
+    <span class$="difficulty-indicator__value difficulty-indicator__value--[[difficulty]]">[[difficulty]] out of 5</span>
+  </template>
+
+  <script>
+    Polymer({
+      is: 'difficulty-indicator',
+
+      properties: {
+        difficulty: Number,
+      },
+    });
+  </script>
+</dom-module>

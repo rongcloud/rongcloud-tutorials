@@ -1,0 +1,65 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
+
+<link rel="import" href="elements/tutorials-app-header.html">
+
+<dom-module id="error-404">
+  <template>
+    <style include="iron-flex iron-flex-alignment">
+      .content {
+        max-width: 1030px;
+        padding: 6.25rem 0;
+        width: 100%;
+      }
+
+      .description {
+        min-width: 375px;
+      }
+
+      h1 {
+        font-size: 2.8125em;
+        font-weight: 300;
+      }
+
+      p {
+        margin-top: 0;
+        font-size: 1.4375em;
+        font-weight: 300;
+      }
+    </style>
+
+    <tutorials-app-header></tutorials-app-header>
+    <div class="wrapper horizontal layout center-justified">
+      <div class="content horizontal layout wrap center-justified">
+        <div class="pictogram horizontal layout center-justified flex">
+          <img src="//rongcloud-file.ronghub.com/3f3bf643e9bf37a9a0.svg?attname=image-404.svg&e=2147483647&token=CddrKW5AbOMQaDRwc3ReDNvo3-sL_SO1fSUBKV3H:Bt88p1qKRTiPMsKMZg1QkRmb228=" alt="Error owl" width="365">
+        </div>
+        <div class="description horizontal layout center-justified flex">
+          <div class="description vertical layout center-justified">
+            <h1>404: Page not found</h1>
+            <p>Sorry, we couldn’t find that page.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </template>
+
+  <script>
+    Polymer({
+      is: 'error-404',
+
+      properties: {
+        requestedPage: {
+          type: String,
+        },
+      },
+
+      attached: function() {
+        this.fire('app-metadata', {
+          title: '404: Page not found | RongCloud tutorials',
+          description: 'Sorry, we couldn\'t find that page.',
+        });
+      },
+    });
+  </script>
+</dom-module>

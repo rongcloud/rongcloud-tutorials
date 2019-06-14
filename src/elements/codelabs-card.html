@@ -1,0 +1,214 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
+<link rel="import" href="../../bower_components/iron-icon/iron-icon.html">
+<link rel="import" href="../../bower_components/iron-icons/device-icons.html">
+<link rel="import" href="../../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../../bower_components/paper-card/paper-card.html">
+
+<link rel="import" href="difficulty-indicator.html">
+<link rel="import" href="time-pretty.html">
+
+<dom-module id="codelabs-card">
+
+  <template>
+
+    <style include="iron-flex iron-flex-alignment">
+      :host {
+        display: inline-block;
+
+        --category-secondary: #103A74;
+      }
+
+      paper-card {
+        font-family: Helvetica, Arial;
+        height: 100%;
+        position: relative;
+        width: 100%;
+
+        --paper-card-content: {
+          height: 100%;
+          padding: 0;
+        };
+      }
+
+      paper-card a {
+        color: var(--primary-text-color);
+        overflow: hidden;
+        display: flex;
+        height: 100%;
+        flex-direction: column;
+      }
+
+      .header {
+        background: url('../../images/card_background.png') no-repeat right bottom;
+        background-size: cover;
+        padding: 10px;
+        min-height: 120px;
+        color: #fff;
+        border-radius: 2px 2px 0 0;
+        flex: 1;
+      }
+
+      .body {
+        margin: 0 16px 16px;
+      }
+
+      .heading {
+        margin: 10px 0 0;
+        font-family: Helvetica, Arial;
+        font-size: 28px;
+        font-weight: 300;
+      }
+
+      .light {
+        color: white;
+      }
+
+      .card-category {
+        text-align: left;
+        text-transform: uppercase;
+        float: left;
+        position: relative;
+        left: 0;
+        width: 100%;
+      }
+
+      .duration {
+        min-width: 109px;
+        align-self: flex-end;
+      }
+
+      .card-actions {
+        box-sizing: border-box;
+        font-size: 1em;
+        width: 100%;
+        line-height: 2;
+      }
+
+      a {
+        text-decoration: none;
+      }
+
+      .summary {
+        min-height: 200px;
+        margin: 0;
+      }
+
+      .meta {
+        color: var(--secondary-text-color);
+        font-size: 0.875em;
+        flex-wrap: wrap;
+      }
+
+      .meta--tags {
+        bottom: 0;
+        padding-right: 10px;
+        position: absolute;
+      }
+
+      .meta--tags .meta__tag::after {
+        content: ' ,';
+        display: inline-block;
+      }
+
+      .meta--tags .meta__tag:last-of-type::after {
+        content: '';
+      }
+
+      .duration__value {
+        color: var(--primary-text-color);
+      }
+
+      .layout.start-justified {
+        justify-content: space-between;
+      }
+
+      .label {
+        height: 28px;
+        position: absolute;
+        right: 0;
+      }
+    </style>
+
+    <paper-card>
+      <div class="card-content">
+        <a href="/tutorial/[[url]][[generateBackParameter]]#0" title="[[heading]]">
+          <div class="header vertical layout">
+            <div class="horizontal end-justified layout">
+              <div class="light card-category">[[firstcategory]]
+                <img class="label" src="[[label]]">
+              </div>
+            </div>
+            <h2 class="heading">[[heading]]</h2>
+          </div>
+          <div class="body vertical layout">
+            <p class="meta"><time-pretty datetime="[[published]]">[[published]]</time-pretty></p>
+            <p class="summary">[[summary]]</p>
+            <div class="horizontal start-justified layout meta">
+              <div class="difficulty">
+                难度系数: <difficulty-indicator difficulty="[[difficulty]]"></difficulty-indicator>
+              </div>
+              <div class="duration">
+                阅读时长: <span class="duration__value">[[duration]] 分钟</span>
+              </div>
+            </div>
+          </div>
+        </a>
+      </div>
+    </paper-card>
+
+  </template>
+
+  <script>
+
+    Polymer({
+
+      is: 'codelabs-card',
+
+      properties: {
+        summary: String,
+        heading: String,
+        category: Array,
+        firstcategory: {
+          type: String,
+          computed: '_extractFirstCategory(category)',
+        },
+        difficulty: Number,
+        duration: Number,
+        tags: Array,
+        label: {
+          type: String,
+          computed: '_extractLabelTag(tags)',
+        },
+        published: {
+          type: String,
+        },
+        url: String,
+        currenturl: String,
+        generateBackParameter: {
+          type: String,
+          computed: '_generateBackParameter(currenturl)',
+        },
+      },
+
+      _extractFirstCategory: function(category) {
+        let firstcategory = category[0];
+        return firstcategory;
+      },
+
+      _extractLabelTag: function(tags) {
+        return '';
+      },
+
+      _generateBackParameter: function(currenturl) {
+        if (currenturl) {
+          return '?backURL=' + encodeURIComponent(currenturl);
+        }
+        return '';
+      },
+
+    });
+
+  </script>
+
+</dom-module>

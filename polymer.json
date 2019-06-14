@@ -1,0 +1,35 @@
+{
+  "entrypoint": "index.html",
+  "shell": "src/rongcloud-tutorials-app.html",
+  "fragments": [
+    "src/codelabs-index.html",
+    "src/codelabs-page.html",
+    "src/error-404.html"
+  ],
+  "sources": [
+    "images/**/*",
+    "src/**/*",
+    "static/**/*",
+    "bower.json"
+  ],
+  "extraDependencies": [
+    "api/**/*",
+    "bower_components/webcomponentsjs/webcomponents-lite.min.js",
+    "manifest.json",
+    "robots.txt"
+  ],
+  "builds": [{
+    "name": "bundled",
+    "bundle": false,
+    "js": {"minify": true, "compile": true},
+    "css": {"minify": true},
+    "html": {"minify": true},
+    "addServiceWorker": false,
+    "addPushManifest": true,
+    "insertPrefetchLinks": true,
+    "basePath":false
+  }],
+  "lint": {
+    "rules": ["polymer-2-hybrid"]
+  }
+}

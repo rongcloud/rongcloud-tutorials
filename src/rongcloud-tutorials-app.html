@@ -1,0 +1,184 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/app-metadata/app-metadata.html">
+<link rel="import" href="../bower_components/app-route/app-location.html">
+<link rel="import" href="../bower_components/app-route/app-route.html">
+<link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
+<link rel="import" href="../bower_components/iron-pages/iron-pages.html">
+
+<!-- <link rel="import" href="elements/websocket-reloader.html"> -->
+
+
+<dom-module id="rongcloud-tutorials-app">
+  <link rel="lazy-import" group="codelabs-index" href="codelabs-index.html">
+  <link rel="lazy-import" group="codelabs-page" href="codelabs-page.html">
+  <link rel="lazy-import" group="error-404" href="error-404.html">
+
+  <template>
+    <style include="iron-flex">
+      :root {
+        --rongcloud-orange: #103A74;
+        --primary-color: var(--rongcloud-orange);
+        --secondary-color: #103A74;
+        --primary-text-color: #111;
+        --secondary-text-color: #666;
+        --tertiary-text-color: #111;
+        --app-primary-color: var(--rongcloud-orange);
+        --app-secondary-color: black;
+        --color-light: #f7f7f7;
+        --color-mid-light: #cdcdcd;
+        --color-dark: #333;
+        --font-weight: 300;
+      }
+
+      :host {
+        display: block;
+        line-height: 1.5;
+
+        --category-color: white;
+      }
+    </style>
+
+    <iron-ajax
+      auto
+      url="../api/codelabs.json"
+      handle-as="json"
+      on-response="_codelabsInfoHandler"
+      last-response="{{_codelabsLastResponse}}"
+      loading="{{isLoading}}"></iron-ajax>
+
+    <app-location route="{{route}}"></app-location>
+    <app-route
+        route="{{route}}"
+        pattern="/:page"
+        data="{{routeData}}"
+        tail="{{subroute}}"></app-route>
+
+    <websocket-reloader></websocket-reloader>
+
+    <div class="layout vertical">
+      <iron-pages id="pages" role="main" selected="[[page]]" attr-for-selected="name">
+        <codelabs-index name="index" id="page-index" route="[[subroute]]" codelabs="{{codelabs}}"></codelabs-index>
+        <codelabs-page name="tutorial" id="page-tutorial" route="[[subroute]]" codelabs="{{codelabs}}"></codelabs-page>
+        <error-404 name="404" requested-page="[[page]]"></error-404>
+      </iron-pages>
+    </div>
+
+  </template>
+
+  <script>
+    Polymer({
+      is: 'rongcloud-tutorials-app',
+
+      properties: {
+        _codelabsLastResponse: Object,
+        codelabs: {
+          type: Array,
+          notify: true,
+        },
+        isLoading: Boolean,
+        page: {
+          type: String,
+          value: 'index',
+          reflectToAttribute: true,
+        },
+        routeData: Object,
+        subroute: String,
+      },
+
+      observers: [
+        '_loadPage(routeData.page)',
+      ],
+
+      attached: function() {
+        Polymer.AppMetadata.requestAvailability();
+      },
+
+      ready: function() {
+        let el = document.querySelector('rongcloud-tutorials-app');
+        el.addEventListener('iron-ajax-error', function(error) {
+          this._loadErrorPage();
+        });
+
+        this.tabIndex = 0;
+
+        this.addEventListener('focus', function() {
+          let mainContainer = document.getElementById('mainContainer');
+
+          if (mainContainer) {
+            mainContainer.setAttribute('tabindex', 0);
+            mainContainer.focus();
+          }
+        });
+      },
+
+      _loadPage: function _loadPage(page) {
+        // load page import on demand.
+        page = page || 'index';
+        let pageToLoad = page;
+        if (page == 'index') {
+          page = 'index';
+          pageToLoad = 'codelabs-index';
+        }
+        if (page == 'tutorial') {
+          pageToLoad = 'codelabs-page';
+        }
+        if (page == '404') {
+          pageToLoad = 'error-404';
+        }
+
+        let hrefToImport = this.resolveUrl(pageToLoad + '.html');
+        this.importHref(
+          hrefToImport,
+          function loadPage() {
+            this.page = page;
+            let currentPage = this.$.pages.selectedItem;
+            if (currentPage && currentPage.updateMetadata) {
+              currentPage.updateMetadata();
+            }
+            // We don't currently manage canonical URLs and the may be set
+            // from server. This will remove them for now on page changes.
+            const canonicalTag = document.querySelectorAll(
+              'link[rel="canonical"]'
+            );
+            if (canonicalTag.length > 0) {
+              canonicalTag.forEach((node) => {
+                node.parentNode.removeChild(node);
+              });
+            }
+          },
+          function onImportError(event) {
+            this._loadErrorPage();
+          }
+        );
+      },
+
+      _loadErrorPage: function _loadErrorPage() {
+        this._loadPage('404');
+      },
+
+      _codelabsInfoHandler: function(event) {
+        let codelabs = [];
+        if (this.codelabs !== undefined) {
+          codelabs = this.codelabs;
+        }
+        this.categoriesmap = event.detail.response['categories'];
+        this.eventsmap = event.detail.response['events'];
+        event.detail.response['codelabs'].forEach(function(codelab) {
+          // filter hidden items
+          if (codelab.tags.indexOf('hidden') !== -1) {
+            return;
+          }
+          codelabs.push(codelab);
+        }, this);
+
+        // Force a binding update. Officially recommended, really!
+        // https://www.polymer-project.org/1.0/docs/devguide/model-data#override-dirty-check
+        this.codelabs = [];
+        this.codelabs = codelabs;
+      },
+
+    });
+  </script>
+
+</dom-module>

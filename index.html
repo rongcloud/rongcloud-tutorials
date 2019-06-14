@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
+  <title>RongCloud tutorials</title>
+
+  <meta name="theme-color" content="#103A74">
+
+  <base href="/">
+  <link rel="icon" type="image/png" href="//f2e.cn.ronghub.com/web-site-dev/favicon-16x16.png" sizes="16x16" />
+  <link rel="icon" type="image/png" href="//f2e.cn.ronghub.com/web-site-dev/favicon-32x32.png" sizes="32x32" />
+  <link rel="manifest" href="manifest.json">
+  <style>
+    body {
+      margin: 0;
+      font-family: sans-serif;
+      font-weight: 300;
+      line-height: 1.5;
+      min-height: 100vh;
+      background: #f7f7f7 url('./images/image-background-paper.png') center top repeat-y;
+    }
+  </style>
+
+  <script>
+    // Setup Polymer options
+    window.Polymer = {
+      dom: 'shady',
+      lazyRegister: true,
+    };
+
+    // Load webcomponentsjs polyfill if browser does not support native
+    // Web Components
+    (function() {
+      'use strict';
+      var onload = function() {
+        // For native Imports, manually fire WebComponentsReady so user code
+        // can use the same code path for native and polyfill'd imports.
+        if (!window.HTMLImports) {
+          document.dispatchEvent(
+            new CustomEvent('WebComponentsReady', {bubbles: true})
+          );
+        }
+      };
+
+      var webComponentsSupported = (
+        'registerElement' in document
+        && 'import' in document.createElement('link')
+        && 'content' in document.createElement('template')
+      );
+
+      if (!webComponentsSupported) {
+        var script = document.createElement('script');
+        script.async = true;
+        script.src = 'bower_components/webcomponentsjs/webcomponents-lite.min.js';
+        script.onload = onload;
+        document.head.appendChild(script);
+      } else {
+        onload();
+      }
+    })();
+  </script>
+
+  <link rel="import" href="src/rongcloud-tutorials-app.html">
+</head>
+<body class="fullbleed" unresolved>
+  <rongcloud-tutorials-app></rongcloud-tutorials-app>
+</body>
+</html>

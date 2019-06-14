@@ -1,0 +1,345 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/app-route/app-route.html">
+<link rel="import" href="../bower_components/app-route/app-route-converter.html">
+<link rel="import" href="../bower_components/codelab-components/google-codelab-elements.html">
+<link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../bower_components/iron-location/iron-location.html">
+<link rel="import" href="../bower_components/iron-location/iron-query-params.html">
+
+<!-- <link rel="import" href="elements/tutorial-feedback.html"> -->
+<dom-module id="codelabs-page">
+  <template>
+    <style>
+      :root {
+        --google-codelab-header-background: var(--secondary-color);
+        --paper-blue-500: var(--secondary-color);
+        --google-codelab-fab-background: var(--secondary-color);
+
+        --paper-toolbar-title: {
+          font-family: sans-serif;
+          font-size: 1.17em;
+          font-weight: var(--font-weight);
+        };
+      }
+
+      :host {
+        display: block;
+        min-height: 100vh;
+      }
+
+      google-codelab {
+        --paper-drawer-panel-main-container: {
+          background: transparent;
+        };
+      }
+
+      google-codelab-step {
+        --google-codelab-step-code: {
+          font-family: Helvetica, Arial;
+        };
+
+        --google-codelab-step-warn: {
+          border: 1px solid #ed3146;
+          background: rgba(237, 49, 70, 0.1);
+          color: #333;
+        };
+
+        --google-codelab-step-tip: {
+          border: 1px solid #eca918;
+          background: rgba(236, 169, 24, 0.1);
+          color: #333;
+        };
+      }
+      #contentContainer google-codelab pre .str,
+      #contentContainer google-codelab pre .kwd,
+      #contentContainer google-codelab pre .com,
+      #contentContainer google-codelab pre .typ,
+      #contentContainer google-codelab pre .lit,
+      #contentContainer google-codelab pre .pun,
+      #contentContainer google-codelab pre .pln,
+      #contentContainer google-codelab pre .tag,
+      #contentContainer google-codelab pre .atn,
+      #contentContainer google-codelab pre .atv,
+      #contentContainer google-codelab pre .dec {
+        font-family: Source Code Pro,Helvetica,Arial;
+      }
+      /* #contentContainer google-codelab pre {
+        background-color: var(--color-light);
+        border-radius: 2px;
+        border: 1px solid var(--color-mid-light);
+        color: var(--color-dark);
+      }
+
+      #contentContainer google-codelab pre .str,
+      #contentContainer google-codelab pre .kwd,
+      #contentContainer google-codelab pre .com,
+      #contentContainer google-codelab pre .typ,
+      #contentContainer google-codelab pre .lit,
+      #contentContainer google-codelab pre .pun,
+      #contentContainer google-codelab pre .pln,
+      #contentContainer google-codelab pre .tag,
+      #contentContainer google-codelab pre .atn,
+      #contentContainer google-codelab pre .atv,
+      #contentContainer google-codelab pre .dec {
+        color: #333;
+      } */
+
+      #contentContainer google-codelab-step::shadow .instructions {
+        /* TODO: Move arrows down on smaller viewports */
+
+        /* margin-bottom: 96px; */
+      }
+
+      #contentContainer google-codelab-survey {
+        border: 1px solid #19b6ee;
+        background: rgba(25, 182, 238, 0.1);
+        border-radius: 2px;
+      }
+
+      #contentContainer google-codelab p img {
+        /*  Override images being forced at 100% width  */
+        width: auto;
+      }
+
+      #contentContainer google-codelab aside.label {
+        border: 1px solid #2397f3;
+        background: #f1f8ff;
+      }
+
+      #contentContainer google-codelab aside .label-img {
+        width: 100px;
+        float: left;
+        margin-top: 10px;
+        margin-right: 14px;
+      }
+    </style>
+
+    <iron-location query="{{query}}"></iron-location>
+    <iron-query-params
+        params-string="{{query}}"
+        params-object="{{queryParams}}">
+    </iron-query-params>
+    <app-route
+      route="{{route}}"
+      pattern="/:codelab"
+      data="{{routeData}}"
+      tail="{{routeTail}}">
+    </app-route>
+    <iron-ajax
+      id="tutorialAjax"
+      url="[[url]]/index.html"
+      handle-as="text"
+      loading="{{loading}}"
+      on-response="_loadTutorial"
+      bubbles="true">
+    </iron-ajax>
+    <div id="contentContainer">
+    </div>
+  </template>
+
+  <script>
+    Polymer({
+      is: 'codelabs-page',
+
+      properties: {
+        url: {
+          type: String,
+          computed: '_codelaburl(routeData.codelab)',
+        },
+        route: {
+          type: String,
+        },
+        routeData: Object,
+        routeTail: String,
+        loading: {
+          type: Boolean,
+          notify: true,
+          value: false,
+        },
+        codelabs: {
+          type: Array,
+          notify: true,
+        },
+        active: {
+          type: Boolean,
+          value: true
+        },
+        backURL: {
+          type: String,
+          value: '/',
+        },
+        queryParams: {
+          type: Object,
+          value: {},
+        },
+      },
+
+      observers: [
+        '_handleLoading(loading, url)',
+        '_onPageChange(routeData.codelab)',
+        '_updateMetadata(routeData.codelab, codelabs)',
+      ],
+
+      ready: function() {
+        let el = document.querySelector('rongcloud-tutorials-app');
+        el.addEventListener('google-codelab-ready', function(error) {
+          this._attachFeedbackForm();
+          this._addLabelNote();
+
+          // Set an empty title on the first child element of the codelab
+          // Firefox picks up Codelab's title attribute and makes a tooltip
+          var metaNode = document.querySelector('#metadata');
+          if(metaNode){
+            metaNode.style='display:none;';
+          }
+          var contentNode = document.querySelector('#drawer');
+          if(contentNode){
+            contentNode.querySelector('#drawer').setAttribute('title', '');
+          }
+        }.bind(this));
+      },
+
+      _onPageChange: function(slug) {
+        
+        if (slug) {
+          this.$.tutorialAjax.generateRequest();
+        }
+      },
+
+      _extractRootDomain: function(url) {
+        let domain;
+        if (url.indexOf('://') > -1) {
+          domain = url.split('/')[2];
+        } else {
+          domain = url.split('/')[0];
+        }
+        // Strip port and params
+        domain = domain.split(':')[0];
+        domain = domain.split('?')[0];
+
+        splitArr = domain.split('.');
+        arrLen = splitArr.length;
+        domain = domain.split('.').reverse();
+        let root = domain[1] + '.' + domain[0];
+        return root;
+      },
+
+      _goToHome: function() {
+        let backURL = this.backURL;
+        if (this.queryParams.backURL !== undefined) {
+          backURL = this.queryParams.backURL;
+        }
+
+        const isExternalURLRegex = new RegExp('^(?:[a-z]+:)?//', 'i');
+        const domainsWhitelist =
+          ['www.rongcloud.cn'];
+
+        // Join the array in '(a)|(b)|(c)' format
+        let whitelistStr = domainsWhitelist.map((i) => '(' + i + ')').join('|');
+        const isWhitelisted = new RegExp('(' + whitelistStr + ')');
+
+        let isExternalURL = false;
+        if (backURL && isExternalURLRegex.test(backURL)) {
+          isExternalURL = true;
+        }
+
+        if (history.pushState && !isExternalURL) {
+          window.history.pushState({}, null, backURL);
+          window.dispatchEvent(new CustomEvent('location-changed'));
+        } else {
+          let rootDomain = this._extractRootDomain(backURL);
+          if (isWhitelisted.test(rootDomain)) {
+            window.location.href = backURL;
+          } else {
+            window.location.href = '/';
+          }
+        }
+      },
+
+      _handleLoading: function(loading) {
+        if (loading !== true) {
+          return;
+        }
+        Polymer.dom(this.$.contentContainer).innerHTML = '';
+      },
+
+      _updateMetadata: function() {
+        if (!this.codelabs || !this.routeData || !this.routeData.codelab) {
+          return;
+        }
+        let currentUrl = this.routeData.codelab;
+        let metadata = this.codelabs.filter(function(metadata) {
+          return metadata.url === currentUrl;
+        })[0];
+        if (metadata !== undefined) {
+          this.fire('app-metadata', {
+            'title': metadata.title + ' | RongCloud tutorials',
+            'description': metadata.summary,
+            'author': metadata.author || '',
+            'og:description': metadata.summary || '',
+            'og:image': metadata.image || '',
+            'og:title': metadata.title + ' | RongCloud tutorials',
+            'og:type': 'article',
+            'article:author': metadata.author || '',
+            'article:published_time': metadata.published || '',
+          });
+        }
+      },
+
+      _loadTutorial: function(e, url) {
+        this._updateMetadata();
+        const resp = e.detail.response;
+        let newHTML = resp.replace(/CODELABURL/g, this.url);
+        let contentContainer = Polymer.dom(this.$.contentContainer);
+        contentContainer.innerHTML = newHTML;
+
+        let codelab = document.querySelector('google-codelab');
+        codelab._goToHome = this._goToHome.bind(this);
+      },
+
+      _attachFeedbackForm: function() {
+        let currentUrl = this.routeData.codelab;
+        let metadata = this.codelabs.filter(function(metadata) {
+          return metadata.url === currentUrl;
+        })[0];
+
+        let contentContainer = Polymer.dom(this.$.contentContainer);
+        let steps = contentContainer.querySelectorAll('google-codelab-step');
+        let lastPage = steps[steps.length - 1].querySelector('.inner');
+
+        // let tutorialFeedback = document.createElement('tutorial-feedback');
+        // tutorialFeedback.title = metadata.title;
+        // lastPage.appendChild(tutorialFeedback);
+      },
+
+      _addLabelNote: function(tags) {
+        let currentUrl = this.routeData.codelab;
+        let metadata = this.codelabs.filter(function(metadata) {
+          return metadata.url === currentUrl;
+        })[0];
+
+        if (metadata.tags.includes('gci')) {
+          let contentContainer = Polymer.dom(this.$.contentContainer);
+          let steps = contentContainer.querySelectorAll('google-codelab-step');
+          let lastPage = steps[0].querySelector('p');
+          content = '<aside class="label special style-scope codelabs-page">';
+          content += '<img class="label-img style-scope codelabs-page" src=';
+          content += ' alt="Google Code-in">';
+          content += 'participate in <a href="https://codein.withgoogle.com/">';
+          content += 'the Google Code-in contest</a>.';
+          content += '<br>This tutorial was written by a participating student,';
+          content += ' not a professional writer, ';
+          content += 'so if you have any comments or suggestions, ';
+          content += 'please leave some feedback - the community ';
+          content += '(and the student!) will greatly appreciate it.</p>';
+          lastPage.insertAdjacentHTML('beforeBegin', content);
+        };
+      },
+
+      _codelaburl: function(codelabpath) {
+        return 'src/codelabs/' + codelabpath;
+      },
+
+    });
+  </script>
+</dom-module>

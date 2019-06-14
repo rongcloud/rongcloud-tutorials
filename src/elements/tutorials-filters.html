@@ -1,0 +1,268 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
+<link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../../bower_components/paper-item/paper-item.html">
+<link rel="import" href="../../bower_components/paper-listbox/paper-listbox.html">
+<link rel="import" href="../../bower_components/paper-tabs/paper-tab.html">
+<link rel="import" href="../../bower_components/paper-tabs/paper-tabs.html">
+
+<dom-module id="tutorials-filters">
+  <template>
+    <style>
+      .filter-label {
+        display: inline-block;
+        float: left;
+        margin: 10px 0.625rem 0.5rem 0;
+        position: relative;
+        width: auto;
+      }
+
+      .filters-wrapper {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        margin-bottom: 1em;
+      }
+
+      paper-dropdown-menu {
+        font-family: Helvetica, Arial;
+
+        --paper-input-container-focus-color: white;
+
+        --paper-input-container: {
+          background: white;
+          border: 1px solid var(--color-mid-light);
+          box-shadow: 0 1px 2px rgba(0, 0, 0, 0.12) inset;
+          padding: 6px 10px;
+          height: 30px;
+        };
+
+        --paper-input-container-input: {
+          color: var(--primary-text-color);
+          font-family: Helvetica, Arial;
+          font-weight: 300;
+          width: 100%;
+          display: block;
+          line-height: 30px;
+          cursor: pointer;
+        };
+
+        --paper-input-container-label: {
+          color: var(--primary-text-color);
+          font-weight: 300;
+        };
+
+        --paper-input-container-underline: {
+          display: none;
+        };
+      }
+
+      @media only screen and (min-width: 769px) {
+        paper-dropdown-menu {
+          width: 228px;
+        }
+      }
+
+      .filter {
+        display: flex;
+        flex-direction: column;
+        flex: 1 1 auto;
+        margin: 1em 0;
+        width: 100%;
+      }
+
+      @media only screen and (min-width: 769px) {
+        .filter {
+          flex-direction: row;
+          margin: 1em 1em 1em 0;
+        }
+      }
+
+      .sort {
+        display: flex;
+        flex-direction: column;
+        flex: 1 1 auto;
+        margin: 1em 0;
+        width: 100%;
+      }
+
+      @media only screen and (min-width: 769px) {
+        .sort {
+          flex-direction: row;
+          align-self: flex-end;
+          margin: 1em 0 1em 1em;
+          width: auto;
+        }
+      }
+
+      paper-button.button--primary {
+        background: white;
+        border: 1px solid var(--color-mid-light);
+        color: black;
+        float: left;
+        padding: 7px 11px;
+        position: relative;
+        text-transform: none;
+        margin-left: 0;
+      }
+
+      paper-button.button--primary:hover {
+        background: var(--color-light);
+        border-color: var(--secondary-text-color);
+      }
+
+      paper-listbox {
+        border: 1px solid #cdcdcd;
+        padding: 0;
+        position: fixed;
+        left: 20px;
+        right: 20px;
+      }
+
+      @media only screen and (min-width: 769px) {
+        paper-listbox {
+          position: static;
+          width: inherit;
+        }
+      }
+
+      paper-item {
+        font-family: Helvetica, Arial;
+        padding-left: 10px;
+        cursor: pointer;
+        box-sizing: border-box;
+      }
+
+      .custom-width {
+        width: auto;
+      }
+
+      @media only screen and (min-width: 769px) {
+        .custom-width {
+          width: 228px;
+        }
+      }
+    </style>
+
+    <div class="horizontal clearfix end">
+      <div class="filters-wrapper">
+        <div class="filter">
+          <p class="filter-label">Filter results by:</p>
+          <paper-dropdown-menu class="custom-width" label="<topic>" no-label-float noink no-animations>
+            <paper-listbox id="categorySelect" class="custom-width dropdown-content" attr-for-selected="data-sort" selected="{{selectedCategory}}">
+              <template is="dom-repeat" items="[[_toArray(categoryOptions)]]">
+                <paper-item data-sort$="[[item.value]]">[[item.name]]</paper-item>
+              </template>
+            </paper-listbox>
+          </paper-dropdown-menu>
+        </div>
+
+        <div class="sort">
+          <p class="filter-label">Sort results by:</p>
+          <paper-dropdown-menu class="custom-width" no-label no-label-float noink no-animations>
+            <paper-listbox id="sortSelect" class="custom-width dropdown-content" attr-for-selected="data-sort" selected="{{selectedSort}}">
+              <template is="dom-repeat" items="[[_toArray(sortOptions)]]">
+                <paper-item data-sort$="[[item.value]]">[[item.name]]</paper-item>
+              </template>
+            </paper-listbox>
+          </paper-dropdown-menu>
+        </div>
+      </div>
+
+      <template is="dom-if" if="[[showUsers]]">
+        <paper-dropdown-menu label="<user>" disabled="true" no-label-float noink no-animations>
+          <paper-listbox id="userSelect" class="dropdown-content" attr-for-selected="data-sort" selected="{{selectedUser}}">
+            <template is="dom-repeat" items="[[_toArray(userOptions)]]">
+              <paper-item data-sort$="[[item.value]]">[[item.name]]</paper-item>
+            </template>
+          </paper-listbox>
+        </paper-dropdown-menu>
+      </template>
+
+      <template is="dom-if" if="[[showClear]]">
+        <paper-button noink class="button--primary white" on-tap="_resetFilters" disabled="{{isClearDisabled}}">Clear filters</paper-button>
+      </template>
+
+
+
+    </div>
+  </template>
+
+  <script>
+    Polymer({
+      is: 'tutorials-filters',
+
+      properties: {
+        categoryOptions: {
+          type: Object,
+          value: {
+            '': 'All topics',
+            'cloud': 'Cloud',
+            'community': 'Community',
+            'containers': 'Containers',
+            'desktop': 'Desktop',
+            'iot': 'IoT',
+            'packaging': 'Packaging',
+            'server': 'Server',
+          },
+        },
+        sortOptions: {
+          type: Object,
+          value: {
+            'published-desc': 'Newest first',
+            'published-asc': 'Oldest first',
+            'duration-asc': 'Shortest first',
+            'duration-desc': 'Longest first',
+            'difficulty-desc': 'Most difficult first',
+            'difficulty-asc': 'Least difficult first',
+          },
+        },
+        userOptions: {
+          type: Object,
+          value: {
+            '': 'All user types',
+            'desktop-user': 'Desktop user',
+            'developer': 'Developer',
+          },
+        },
+        selectedCategory: {
+          type: String,
+          notify: true,
+        },
+        selectedSort: {
+          type: String,
+          notify: true,
+        },
+        selectedUser: {
+          type: String,
+          notify: true,
+        },
+        showClear: Boolean,
+        showUsers: Boolean,
+        isClearDisabled: {
+          type: Boolean,
+          computed: '_isClearDisabled(selectedCategory, selectedUser)',
+        },
+      },
+
+      _isClearDisabled: function(selectedCategory, selectedUser) {
+        return (selectedCategory.length === 0 && selectedUser.length === 0);
+      },
+
+      _toArray: function(obj) {
+        return Object.keys(obj).map(function(key) {
+          return {
+            name: obj[key],
+            value: key,
+          };
+        });
+      },
+
+      _resetFilters: function() {
+        this.$.categorySelect.selected = '';
+        this.$.userSelect.selected = '';
+      },
+    });
+  </script>
+</dom-module>

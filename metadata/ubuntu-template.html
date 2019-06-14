@@ -1,0 +1,12 @@
+<google-codelab
+  id="codelabobj"
+  title="{{.Title}}">
+  <app-route
+    route="{{"{{"}}route{{"}}"}}"
+    tail="{{"{{"}}routeTail{{"}}"}}"></app-route>
+  {{range .Steps}}
+  <google-codelab-step label="{{.Title}}" duration="{{.Duration.Minutes}}">
+    {{.Content | renderHTML ""}}
+  </google-codelab-step>
+  {{end}}
+</google-codelab>
