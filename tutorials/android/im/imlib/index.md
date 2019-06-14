@@ -16,7 +16,7 @@ author: RongCloud Android Team
 
 Duration: 3:00
 
- 前往[融云开发者后台](https://developer.rongcloud.cn/signin)注册融云开发者帐号，并创建应用。
+ 前往[融云开发者后台](https://developer.rongcloud.cn/signin)注册融云开发者帐号。
 ![d6fdd4a48de7119ba4a3de42ada3774b](./images/quickimg1.png)
         
 
@@ -67,6 +67,10 @@ allprojects {
 ```java
 api 'cn.rongcloud.sdk:im_lib:2.9.17'
 ```
+
+ negative
+: **备注**
+       SDK 版本是不断在迭代升级的，可以修改依赖中的版本号，使用最新版本的 SDK 。
 
 #### 导入 Module 方式
 
