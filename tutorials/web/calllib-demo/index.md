@@ -1,11 +1,12 @@
 ---
 id: web-calllib-demo
 summary: CallLib Demo，包含 CallLib Demo Server、 CallLib Demo Web 的配置说明，通过本教程我们将快速本地运行 CallLib Demo，作为后续 CallLib 集成开发的示例
-categories: CallLib
+categories: Call
 tags: tutorial, guidelines, guide, write, contribute
 difficulty: 2
 status: published
-published: 2019-05-07
+published: 2019-06-18
+platform: Web
 author: RongCloud Web Team
 
 ---

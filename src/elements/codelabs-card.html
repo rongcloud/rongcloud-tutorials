@@ -142,16 +142,20 @@
             <h2 class="heading">[[heading]]</h2>
           </div>
           <div class="body vertical layout">
-            <p class="meta"><time-pretty datetime="[[published]]">[[published]]</time-pretty></p>
-            <p class="summary">[[summary]]</p>
-            <div class="horizontal start-justified layout meta">
+            <p class="meta rong-card-time"><time-pretty datetime="[[published]]">[[published]]</time-pretty></p>
+            <p class="summary rong-card-summary">[[summary]]</p>
+            <div class="horizontal start-justified layout meta rong-card-readtime-box">
               <div class="difficulty">
                 难度系数: <difficulty-indicator difficulty="[[difficulty]]"></difficulty-indicator>
               </div>
-              <div class="duration">
+              <div class="duration rong-card-readtime">
                 阅读时长: <span class="duration__value">[[duration]] 分钟</span>
               </div>
             </div>
+          </div>
+          <div class="rong-card-footer" style="display: none">
+            <i class="rong-card-footer-platform" platform="[[category]]">[[platform]]</i>
+            <button class="rong-card-footer-btn">开始</button>
           </div>
         </a>
       </div>
@@ -168,6 +172,7 @@
       properties: {
         summary: String,
         heading: String,
+        platform: String,
         category: Array,
         firstcategory: {
           type: String,

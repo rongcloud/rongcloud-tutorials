@@ -1,3 +1,5 @@
+<link rel="stylesheet" href="style/extra.css">
+
 <link rel="import" href="../bower_components/polymer/polymer.html">
 <link rel="import" href="../bower_components/app-route/app-route.html">
 <link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
@@ -269,7 +271,7 @@
       data="{{routeData}}"></app-route>
 
     <div class="layout vertical">
-      <tutorials-app-header></tutorials-app-header>
+      <tutorials-app-header class="rong-tutorials-header"></tutorials-app-header>
       <div>
         <template is="dom-if" if="{{currentEvent.id}}">
           <header class="horizontal layout event-wrapper">
@@ -312,7 +314,7 @@
             <template is="dom-repeat" items="[[filteredTutorials]]" sort="[[_getSortFunction(filterSort)]]">
               <codelabs-card heading="[[item.title]]" summary="[[item.summary]]" category="[[item.category]]"
                             difficulty="[[item.difficulty]]" duration="[[item.duration}}" tags="[[item.tags]]"
-                            published="[[item.published]]" url="[[item.url]]"
+                            published="[[item.published]]" url="[[item.url]]" platform="[[item.platform]]"
                             ></codelabs-card>
             </template>
             <template is="dom-if" if="[[isEmpty]]">
@@ -487,6 +489,7 @@
           ));
         }
         this.filteredTutorials = tutorials;
+        console.log(tutorials);
         return tutorials;
       },
 
