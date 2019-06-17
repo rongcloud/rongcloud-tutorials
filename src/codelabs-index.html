@@ -282,22 +282,26 @@
             </div>
           </div>
         </template>
-        <div class="content">
-          <div class="wrap intro">
-            <h3>融云帮助教程</h3>
-            <p>教程涵盖 IM Server、RTC、IM SDK，希望以下教程对融云开发者朋友有所帮助</p>
-            <div>
-              <label class="accessibility-aid" for="edit-keys" hidden="hidden">Search</label>
-              <input id="edit-keys" type="search" placeholder="输入关键字查询..." is="iron-input" bind-value="{{filterSearch}}" />
-              <paper-icon-button class="search" icon="search"></paper-icon-button>
-              <template is="dom-if" if="[[filterSearch]]">
-                <h2 class="heading-results">
-                  </span> 搜索关键字 <span class="heading-results__highlight">[[filterSearch]]</span> 
-                  结果为 <span class="heading-results__highlight">[[searchResultCount]] 条
-                </h2>
-              </template>
-            </div>
-            <div>
+        <div class="content rong-content-box">
+          <div class="rong-wrap-outer">
+            <div class="wrap intro rong-wrap-box">
+              <h3>融云帮助教程</h3>
+              <p>教程涵盖 IM Server、RTC、IM SDK，希望以下教程对融云开发者朋友有所帮助, Google Developers Codelabs provide a guided, tutorial, hands-on coding experience. Most codelabs will step you through
+              the process of building a small application, or adding a new feature to an existing application. They cover a wide range
+              of topics such as Android Wear, Google Compute Engine, Project Tango, and Google APIs on iOS.</p>
+              <div class="rong-search-box">
+                <label class="accessibility-aid" for="edit-keys" hidden="hidden">Search</label>
+                <input id="edit-keys" type="search" placeholder="输入关键字查询..." is="iron-input" bind-value="{{filterSearch}}" />
+                <paper-icon-button class="search" icon="search"></paper-icon-button>
+                <template is="dom-if" if="[[filterSearch]]">
+                  <h2 class="heading-results">
+                    </span> 搜索关键字 <span class="heading-results__highlight">[[filterSearch]]</span>
+                    结果为 <span class="heading-results__highlight">[[searchResultCount]] 条
+                  </h2>
+                </template>
+              </div>
+              <div>
+          </div>
               <!-- <tutorials-filters
                 selected-category="{{filterCategory}}"
                 selected-sort="{{filterSort}}"
@@ -310,7 +314,7 @@
           <div class="horizontal layout end">
             <div class="flex"></div>
           </div>
-          <div class="horizontal layout wrap">
+          <div class="horizontal layout wrap rong-codelabs-box">
             <template is="dom-repeat" items="[[filteredTutorials]]" sort="[[_getSortFunction(filterSort)]]">
               <codelabs-card heading="[[item.title]]" summary="[[item.summary]]" category="[[item.category]]"
                             difficulty="[[item.difficulty]]" duration="[[item.duration}}" tags="[[item.tags]]"

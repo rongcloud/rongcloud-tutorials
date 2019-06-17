@@ -1,6 +1,51 @@
 .rong-app {
-  .codelabs-index-0 .content.codelabs-index {
+  .rong-wrap-outer {
+    width: 100%;
+    background-color: #fff;
+    box-shadow: 0 3px 6px -3px #bdbdbd;
+  }
+  .rong-wrap-box, .rong-codelabs-box {
+    margin: 0 auto;
     max-width: 1024px;
+    h3 {
+      font-size: 42px;
+      line-height: 48px;
+      color: #5c5c5c;
+      margin-bottom: 16px;
+    }
+  }
+  .codelabs-index-0 .intro.codelabs-index p.codelabs-index {
+    line-height: 32px;
+    margin-right: 32px;
+    max-width: 100%;
+    color: #5c5c5c;
+    font-size: 16px;
+  }
+  .codelabs-index-0 .content.rong-content-box {
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+    padding: 0;
+  }
+  .rong-search-box {
+    position: fixed;
+    top: 0;
+    z-index: 99999;
+    right: 73px;
+    paper-icon-button.search.codelabs-index {
+      position: absolute;
+      top: 50%;
+      left: 10px;
+      transform: translateY(-50%);
+    }
+    input[type='search'].codelabs-index {
+      margin: 10px;
+      padding-left: 35px;
+      padding-right: 13px;
+    }
+    .heading-results.codelabs-index {
+      display: none;
+    }
   }
   .header.vertical.layout.style-scope.codelabs-card {
     display: none;
