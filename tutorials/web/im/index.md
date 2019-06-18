@@ -1,11 +1,11 @@
 ---
 id: im-sdk-guide
-summary: 帮助开发者梳理 IM 集成步骤，开发者研发自己 IM 如何使与融云 Web IM SDK 融合说明
-categories: Web, Guide
+summary: IM 集成步骤，帮助开发者梳理如何使用融云 IM SDK 集成应用
+categories: Rongcloud, Guide
 tags: tutorial, guidelines, guide, write, contribute
 difficulty: 3
 status: published
-published: 2019-04-29
+published: 2019-06-18
 author: RongCloud Web Team <yuhongda0315@163.com>
 
 ---

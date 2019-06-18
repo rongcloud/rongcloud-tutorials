@@ -152,7 +152,7 @@ const hostname = 'https://www.rongcloud.cn';
 const tutorialBasePath= `/tutorial`;
 const tutorialBaseURL = `${hostname}${tutorialBasePath}`;
 
-const siteTitle = 'RongCloud tutorials'
+const siteTitle = 'RongCloud Tutorials'
 const siteDescription = 'RongCloud Tutorials';
 
 const tutorialsAPIPath = path.join(__dirname, 'api', 'codelabs.json');
