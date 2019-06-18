@@ -132,7 +132,7 @@
 
     <paper-card>
       <div class="card-content">
-        <a href="/tutorial/[[url]][[generateBackParameter]]#0" title="[[heading]]">
+        <a href="/tutorial/[[url]][[generateBackParameter]]#0" title="[[summary]]">
           <div class="header vertical layout">
             <div class="horizontal end-justified layout">
               <div class="light card-category">[[firstcategory]]
@@ -143,6 +143,7 @@
           </div>
           <div class="body vertical layout">
             <p class="meta rong-card-time"><time-pretty datetime="[[published]]">[[published]]</time-pretty></p>
+            <!-- <p class="rong-card-title" style="display: none;">[[heading]]</p> -->
             <p class="summary rong-card-summary">[[summary]]</p>
             <div class="horizontal start-justified layout meta rong-card-readtime-box">
               <div class="difficulty">
@@ -198,6 +199,7 @@
 
       _extractFirstCategory: function(category) {
         let firstcategory = category[0];
+        this.className += ' rong-content-platform-' + firstcategory;
         return firstcategory;
       },
 
