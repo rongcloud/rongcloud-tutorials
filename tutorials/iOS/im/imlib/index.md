@@ -1,7 +1,7 @@
 ---
 id: id-imlib-guide-ios
 summary: iOS IMLib 集成指南，引导开发者调用 IMLib 中必要的接口，实现即时通讯功能的步骤说明。
-categories: GUIDE
+categories: iOS, GUIDE
 tags: tutorial, guidelines, guide, write, contribute
 difficulty: 3
 status: published

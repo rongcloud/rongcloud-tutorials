@@ -1,0 +1,291 @@
+$contentHeight: 150px;
+$timeTop: 75px;
+$summaryTop: 0;
+
+$webColor: red;
+
+$searchPlaceholderColor: rgb(235, 235, 235);
+
+$maxWidth: 1050px;
+
+$headerColor: #3f51b5;
+
+$webColor: #F1C40F;
+$webImage: url(./img/plat-js.png); 
+
+$androidColor: #a4c639;
+$androidImage: url(./img/plat-android.png);
+
+$iosColor: rgb(61, 136, 222);
+$iosImage: url(./img/plat-ios.png); 
+
+/* ---------- 匹配不同平台图片和颜色 Start ------------- */
+.rong-app {
+  .rong-content-platform-web {
+    .style-scope.codelabs-card.x-scope {
+      border-bottom-color: $webColor;
+    }
+    .rong-card-footer .rong-card-footer-btn {
+      background-color: $webColor;
+      font-weight: 800;
+    }
+    .rong-card-footer .rong-card-footer-platform {
+      background-image: $webImage;
+    }
+  }
+}
+
+.rong-app {
+  .rong-content-platform-android {
+    .style-scope.codelabs-card.x-scope {
+      border-bottom-color: $androidColor;
+    }
+    .rong-card-footer .rong-card-footer-btn {
+      background-color: $androidColor;
+      font-weight: 800;
+    }
+    .rong-card-footer .rong-card-footer-platform {
+      background-image: $androidImage;
+      background-size: 42px;
+    }
+  }
+}
+
+.rong-app {
+  .rong-content-platform-ios {
+    .style-scope.codelabs-card.x-scope {
+      border-bottom-color: $iosColor;
+    }
+    .rong-card-footer .rong-card-footer-btn {
+      background-color: $iosColor;
+      font-weight: 800;
+    }
+    .rong-card-footer .rong-card-footer-platform {
+      background-image: $iosImage;
+      background-size: 42px;
+    }
+  }
+}
+
+/* ---------- 匹配不同平台图片和颜色 End ------------- */
+
+.rong-app {
+  img.tutorials-app-logo {
+    width: 135px !important;
+    margin-left: -40px;
+  }
+  @media screen and (max-width: 1050px) {
+      img.tutorials-app-logo {
+        margin-left: -35px;
+      }
+  }
+  .rong-card-title {
+    display: block !important;
+  }
+  .rong-wrap-outer {
+    width: 100%;
+    background-color: #fff;
+    box-shadow: 0 3px 6px -3px #bdbdbd;
+  }
+  .codelabs-index-0 codelabs-card.codelabs-index:hover {
+    transform: scale(1.04) translate3d(0, 0, 0);
+    transition: 0.3s;
+  }
+  .rong-wrap-box, .rong-codelabs-box {
+    margin: 0 auto;
+    max-width: $maxWidth;
+    h3 {
+      font-size: 42px;
+      line-height: 48px;
+      color: #5c5c5c;
+      margin-bottom: 16px;
+    }
+  }
+  .intro.codelabs-index {
+    padding-bottom: 20px;
+  }
+  .codelabs-index-0 .intro.codelabs-index p.codelabs-index {
+    line-height: 32px;
+    margin-right: 32px;
+    max-width: 100%;
+    color: #5c5c5c;
+    font-size: 16px;
+  }
+  .codelabs-index-0 .content.rong-content-box {
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+    padding: 0;
+  }
+  .rong-search-box {
+    position: fixed;
+    top: 0;
+    z-index: 99999;
+    right: calc((100% - 1050px) / 2);
+    .iron-icon-0 svg {
+      color: white;
+    }
+    paper-icon-button.search.codelabs-index {
+      position: absolute;
+      top: 50%;
+      left: 10px;
+      transform: translateY(-50%);
+    }
+    input[type='search'].codelabs-index {
+      margin: 10px;
+      padding-left: 35px;
+      padding-right: 13px;
+      outline: none;
+      border: none;
+      background-color: rgba(255, 255, 255, 0.08);
+      border-radius: 3px;
+      color: white;
+      font-size: 15px;
+      height: 41px;
+    }
+    input[type='search'].codelabs-index:hover {
+      background-color: rgba(255, 255, 255, 0.15);
+    }
+    input[type='search'].codelabs-index::-webkit-input-placeholder, textarea::-webkit-input-placeholder {
+      color: $searchPlaceholderColor;
+    }
+
+    input[type='search'].codelabs-index:-moz-placeholder, textarea:-moz-placeholder {
+      color: $searchPlaceholderColor;
+    }
+
+    input[type='search'].codelabs-index::-moz-placeholder, textarea::-moz-placeholder {
+      color: $searchPlaceholderColor;
+    }
+
+    input[type='search'].codelabs-index:-ms-input-placeholder, textarea:-ms-input-placeholder {
+      color: $searchPlaceholderColor;
+    }
+    .heading-results.codelabs-index {
+      display: none;
+    }
+  }
+  @media screen and (max-width: 1050px) {
+      .rong-search-box {
+        right: 16px;
+      }
+  }
+  .header.vertical.layout.style-scope.codelabs-card {
+    display: none;
+  }
+  .difficulty.style-scope.codelabs-card {
+    display: none;
+  }
+  .body.vertical.layout.style-scope.codelabs-card {
+    position: relative;
+    margin: 0;
+  }
+  .style-scope.codelabs-card.x-scope {
+    height: $contentHeight;
+    border-bottom: 2px solid transparent;
+    box-shadow: 0 1px rgba(0,0,0,.15);
+    border-bottom-color: #4285f4;
+    border-radius: 3px;
+  }
+  .codelabs-card .rong-card-time {
+    position: absolute;
+    top: $timeTop;
+    right: 0;
+    padding: 0 16px;
+    color: #aaa;
+    margin: 0;
+    font-size: 11px;
+  }
+  .codelabs-card .summary.rong-card-summary {
+    position: absolute;
+    top: $summaryTop;
+    left: 0;
+    width: calc(100% - 32px);
+    height: 53px;
+    padding: 16px 16px 0;
+    font-size: 15px;
+    line-height: 28px;
+    min-height: 0;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+  }
+  .rong-card-readtime-box {
+    position: absolute;
+    top: $timeTop;
+    left: 0;
+    padding: 0 16px;
+    .rong-card-readtime {
+      color: #aaa;
+      font-size: 11px;
+    }
+  }
+  .rong-card-footer {
+    display: block !important;
+    width: calc(100% - 32px);
+    height: 58px;
+    line-height: 58px;
+    bottom: 0;
+    position: absolute;
+    padding: 0 16px;
+    .rong-card-footer-btn {
+      -webkit-font-smoothing: antialiased;
+      color: #fff;
+      font-family: Roboto,Noto,sans-serif;
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: .01em;
+      line-height: 1;
+      padding: 13px 25px;
+      text-transform: uppercase;
+      text-transform: none;
+      float: right;
+      position: relative;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 81px;
+      height: 39px;
+      border: none;
+      background-color: #4285f4;
+      border-radius: 3px;
+      padding: 0;
+      outline: none;
+      cursor: pointer;
+    }
+    .rong-card-footer-platform {
+      position: relative;
+      top: 50%;
+      transform: translateY(-50%);
+      display: inline-block;
+      width: 40px;
+      height: 40px;
+      background-size: 38px;
+      background-repeat: no-repeat;
+      background-position: 0 center;
+      background-image: url('./img/logo.png');
+      margin-left: -4px;
+      // background-image: url('./img/android.svg');
+    }
+  }
+}
+
+.rong-tutorials-header {
+  position: relative;
+  height: 64px;
+  app-header-layout.tutorials-app-header {
+    height: 100%;
+  }
+  app-header.tutorials-app-header {
+    height: 64px;
+  }
+  app-toolbar.tutorials-app-header {
+    height: 100%;
+  }
+  #contentContainer.app-header {
+    background-color: $headerColor;
+  }
+}
+.google-codelab-0 paper-toolbar.google-codelab {
+  background-color: $headerColor;
+}

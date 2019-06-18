@@ -1,3 +1,5 @@
+<link rel="stylesheet" href="style/extra.css">
+
 <link rel="import" href="../bower_components/polymer/polymer.html">
 <link rel="import" href="../bower_components/app-route/app-route.html">
 <link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
@@ -269,7 +271,7 @@
       data="{{routeData}}"></app-route>
 
     <div class="layout vertical">
-      <tutorials-app-header></tutorials-app-header>
+      <tutorials-app-header class="rong-tutorials-header"></tutorials-app-header>
       <div>
         <template is="dom-if" if="{{currentEvent.id}}">
           <header class="horizontal layout event-wrapper">
@@ -280,22 +282,24 @@
             </div>
           </div>
         </template>
-        <div class="content">
-          <div class="wrap intro">
-            <h3>融云帮助教程</h3>
-            <p>教程涵盖 IM Server、RTC、IM SDK，希望以下教程对融云开发者朋友有所帮助</p>
-            <div>
-              <label class="accessibility-aid" for="edit-keys" hidden="hidden">Search</label>
-              <input id="edit-keys" type="search" placeholder="输入关键字查询..." is="iron-input" bind-value="{{filterSearch}}" />
-              <paper-icon-button class="search" icon="search"></paper-icon-button>
-              <template is="dom-if" if="[[filterSearch]]">
-                <h2 class="heading-results">
-                  </span> 搜索关键字 <span class="heading-results__highlight">[[filterSearch]]</span> 
-                  结果为 <span class="heading-results__highlight">[[searchResultCount]] 条
-                </h2>
-              </template>
-            </div>
-            <div>
+        <div class="content rong-content-box">
+          <div class="rong-wrap-outer">
+            <div class="wrap intro rong-wrap-box">
+              <h3>融云帮助教程</h3>
+              <p>融云教程示例包含演示代码、说明，每个教程均可帮助开发者构建一个简单、小型的应用，用来辅助开发者集成融云能力，教程涉及广泛，例如 RTC、IM 并且包含 Android、iOS、Web 多平台教程，希望对融云开发者朋友有所帮助</p>
+              <div class="rong-search-box">
+                <label class="accessibility-aid" for="edit-keys" hidden="hidden">Search</label>
+                <input id="edit-keys" type="search" placeholder="输入关键字查询..." is="iron-input" bind-value="{{filterSearch}}" />
+                <paper-icon-button class="search" icon="search"></paper-icon-button>
+                <template is="dom-if" if="[[filterSearch]]">
+                  <h2 class="heading-results">
+                    </span> 搜索关键字 <span class="heading-results__highlight">[[filterSearch]]</span>
+                    结果为 <span class="heading-results__highlight">[[searchResultCount]] 条
+                  </h2>
+                </template>
+              </div>
+              <div>
+          </div>
               <!-- <tutorials-filters
                 selected-category="{{filterCategory}}"
                 selected-sort="{{filterSort}}"
@@ -308,11 +312,11 @@
           <div class="horizontal layout end">
             <div class="flex"></div>
           </div>
-          <div class="horizontal layout wrap">
+          <div class="horizontal layout wrap rong-codelabs-box">
             <template is="dom-repeat" items="[[filteredTutorials]]" sort="[[_getSortFunction(filterSort)]]">
               <codelabs-card heading="[[item.title]]" summary="[[item.summary]]" category="[[item.category]]"
                             difficulty="[[item.difficulty]]" duration="[[item.duration}}" tags="[[item.tags]]"
-                            published="[[item.published]]" url="[[item.url]]"
+                            published="[[item.published]]" url="[[item.url]]" platform="[[item.platform]]"
                             ></codelabs-card>
             </template>
             <template is="dom-if" if="[[isEmpty]]">
@@ -431,7 +435,7 @@
 
       updateMetadata: function() {
         this.fire('app-metadata', {
-          title: 'RongCloud tutorials',
+          title: 'RongCloud Tutorials',
           description: `RongCloud Tutorials`, // eslint-disable-line
         });
       },

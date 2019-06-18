@@ -152,7 +152,7 @@ const hostname = 'https://www.rongcloud.cn';
 const tutorialBasePath= `/tutorial`;
 const tutorialBaseURL = `${hostname}${tutorialBasePath}`;
 
-const siteTitle = 'RongCloud tutorials'
+const siteTitle = 'RongCloud Tutorials'
 const siteDescription = 'RongCloud Tutorials';
 
 const tutorialsAPIPath = path.join(__dirname, 'api', 'codelabs.json');
@@ -225,6 +225,7 @@ function mapTutorialMetadata(tutorialMetadata, HTMLMeta) {
     published: ['article:published_time'],
     summary: ['description', 'og:description'],
   }
+  console.log(metadataMap);
   for (let key in metadataMap) {
     if (tutorialMetadata[key] !== undefined) {
       metadataMap[key].forEach(function(metaName) {

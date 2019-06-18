@@ -17,9 +17,9 @@
   <template>
     <style include="iron-flex">
       :root {
-        --rongcloud-orange: #103A74;
+        --rongcloud-orange: #3f51b5;
         --primary-color: var(--rongcloud-orange);
-        --secondary-color: #103A74;
+        --secondary-color: #3f51b5;
         --primary-text-color: #111;
         --secondary-text-color: #666;
         --tertiary-text-color: #111;
@@ -96,6 +96,7 @@
 
       ready: function() {
         let el = document.querySelector('rongcloud-tutorials-app');
+        el.className = 'rong-app';
         el.addEventListener('iron-ajax-error', function(error) {
           this._loadErrorPage();
         });

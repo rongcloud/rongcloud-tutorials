@@ -1,7 +1,7 @@
 ---
 id: id-imkit-guide-android
-summary: 帮助开发者梳理 Android IM 集成步骤，开发者研发自己 IM 如何使与融云 Android IM SDK 融合说明
-categories: Guide
+summary: Android IMKit 集成步骤，帮助开发者快速集成 Android IMKit SDK
+categories: Android, Guide
 tags: tutorial, guidelines, guide, write, contribute
 difficulty: 3
 status: published
