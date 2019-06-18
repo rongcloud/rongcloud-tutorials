@@ -1,7 +1,7 @@
 ---
 id: web-sealrtc-tutorial
 summary: 音视频示例 SealRTC 使用说明，包含 SealRTC Server、SealRTC Web 的配置说明，通过本教程我们将快速本地运行 SealRTC，作为后续集成开发的示例，参考使用
-categories: rtc
+categories: Web, rtc
 tags: tutorial, guidelines, guide, write, contribute
 difficulty: 2
 status: published

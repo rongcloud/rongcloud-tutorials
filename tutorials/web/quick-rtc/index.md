@@ -1,7 +1,7 @@
 ---
 id: web-quick-rtc-tutorial
 summary: 帮助开发者梳理 Web RTC 集成步骤，快速了解 RTC 3.0 如何上手集成
-categories: rtc
+categories: Web, rtc
 tags: tutorial, guidelines, guide, write, contribute
 difficulty: 3
 status: published

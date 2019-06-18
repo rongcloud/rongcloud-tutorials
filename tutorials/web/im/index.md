@@ -1,7 +1,7 @@
 ---
 id: im-sdk-guide
 summary: 帮助开发者梳理 IM 集成步骤，开发者研发自己 IM 如何使与融云 Web IM SDK 融合说明
-categories: Guide
+categories: Web, Guide
 tags: tutorial, guidelines, guide, write, contribute
 difficulty: 3
 status: published

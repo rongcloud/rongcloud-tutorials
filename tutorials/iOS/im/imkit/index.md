@@ -1,7 +1,7 @@
 ---
 id: id-imkit-guide-ios
 summary: iOS IMKit 集成指南，引导开发者调用 IMKit 中必要的接口，实现快速集成即时通讯功能的步骤说明。
-categories: GUIDE
+categories: iOS, GUIDE
 tags: tutorial, guidelines, guide, write, contribute
 difficulty: 2
 status: published
