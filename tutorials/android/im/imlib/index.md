@@ -70,7 +70,7 @@ api 'cn.rongcloud.sdk:im_lib:2.9.17'
 
  negative
 : **备注**
-       SDK 版本是不断在迭代升级的，可以修改依赖中的版本号，使用最新版本的 SDK 。
+       SDK 版本是不断在迭代升级的，可以修改依赖中的版本号，使用最新版本的 SDK 。参考 [https://support.rongcloud.cn/ks/OTUx](https://support.rongcloud.cn/ks/OTUx)。
 
 #### 导入 Module 方式
 
