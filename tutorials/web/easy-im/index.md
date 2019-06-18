@@ -1,6 +1,6 @@
 ---
 id: web-quick-im-tutorial
-summary: Web IM 集成步骤，帮助开发者快速了解 Web IMLib SDK
+summary: Web IMLib 集成步骤，帮助开发者快速了解 Web IMLib SDK
 categories: Web, IM
 tags: tutorial, guidelines, guide, write, contribute
 difficulty: 2

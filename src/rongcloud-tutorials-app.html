@@ -163,7 +163,6 @@
         if (this.codelabs !== undefined) {
           codelabs = this.codelabs;
         }
-        console.log(event.detail.response);
         this.categoriesmap = event.detail.response['categories'];
         this.eventsmap = event.detail.response['events'];
         event.detail.response['codelabs'].forEach(function(codelab) {
@@ -178,7 +177,6 @@
         // https://www.polymer-project.org/1.0/docs/devguide/model-data#override-dirty-check
         this.codelabs = [];
         this.codelabs = codelabs;
-        console.log(codelabs);
       },
 
     });

@@ -199,7 +199,19 @@
 
       _extractFirstCategory: function(category) {
         let firstcategory = category[0];
-        this.className += ' rong-content-platform-' + firstcategory;
+        var className = this.className;
+        if (!this.category || !this.category.length) {
+          return;
+        }
+        var platformIndex = className.indexOf('rong-content-platform-');
+        var hasCurrentPlatform = className.indexOf('rong-content-platform-' + firstcategory) !== -1;
+        if (hasCurrentPlatform) {
+          return;
+        }
+        if (platformIndex !== -1) {
+          className = className.replace('rong-content-platform-', '');
+        }
+        this.className = className + ' rong-content-platform-' + firstcategory;
         return firstcategory;
       },
 
