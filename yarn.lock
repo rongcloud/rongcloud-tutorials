@@ -2867,8 +2867,8 @@ eslint-plugin-html@2.0.3:
   dependencies:
     htmlparser2 "^3.8.2"
 
-eslint@3.19.0:
-  version "3.19.0"
+eslint@4.18.2:
+  version "4.18.2"
   resolved "https://registry.yarnpkg.com/eslint/-/eslint-3.19.0.tgz#c8fc6201c7f40dd08941b87c085767386a679acc"
   dependencies:
     babel-code-frame "^6.16.0"
@@ -7778,8 +7778,8 @@ ultron@~1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/ultron/-/ultron-1.1.0.tgz#b07a2e6a541a815fc6a34ccd4533baec307ca864"
 
-underscore.string@3.3.4:
-  version "3.3.4"
+underscore.string^3.3.5:
+  version "3.3.5"
   resolved "https://registry.yarnpkg.com/underscore.string/-/underscore.string-3.3.4.tgz#2c2a3f9f83e64762fdc45e6ceac65142864213db"
   dependencies:
     sprintf-js "^1.0.3"
@@ -8140,7 +8140,7 @@ wd@^1.2.0:
     mkdirp "^0.5.1"
     q "1.4.1"
     request "2.79.0"
-    underscore.string "3.3.4"
+    underscore.string "3.3.5"
     vargs "0.1.0"
 
 web-component-tester@^6.3.0:
