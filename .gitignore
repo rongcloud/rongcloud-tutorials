@@ -69,3 +69,5 @@ static/
 # ignore downloaded binaries
 bin/*.real
 bin/*.version
+
+yarn.lock
